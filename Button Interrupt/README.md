@@ -1,5 +1,5 @@
 # Button Interrupt
-Now that we have a little introduction to embedded systems, it is time to dive deeper into how efficient a processor can run. Timers and interrupts are two fundamental parts of all decent processors. This excercise aims to recreate Simple Blink from Lab 2 but by using GPIO interrupts. 
+Now that we have a little introduction to embedded systems, it is time to dive deeper into how efficient a processor can run. Timers and interrupts are two fundamental parts of all decent processors. This excercise aims to recreate Button Blink from Lab 2 but by using GPIO interrupts. 
 
 ![alt text](https://github.com/RU09342/lab-3-interrupts-and-timers-tcsmith20/blob/master/Button%20Interrupt/Button%20Interrupt.gif)
 
