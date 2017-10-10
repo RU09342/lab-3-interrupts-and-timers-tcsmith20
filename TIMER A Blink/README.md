@@ -1,15 +1,14 @@
 # TIMER A Blink
-The TIMER peripherals can be used in many situations thanks to it flexibility in features. For this lab, you will be only scratching the surface as to what this peripheral can do. 
+Now that we have a little introduction to embedded systems, it is time to dive deeper into how efficient a processor can run. Timers and interrupts are two fundamental parts of all decent processors. This excercise aims to recreate Multiple Blink from Lab 2 but by using timer interrupts. 
 
-## Up, Down, Continuous 
-There are a few different ways that the timer module can count. For starters, one of the easiest to initialize is Continuous counting where in the TIMER module will alert you when its own counting register overflows. Up mode allows you to utilize a Capture/Compare register to have the counter stop at a particular count and then start back over again. You can also set the TIMER to Up/Down mode where upon hitting a counter or the overflow, instead of setting the counter back to zero, it will count back down to zero. 
+![alt text](https://github.com/RU09342/lab-3-interrupts-and-timers-tcsmith20/blob/master/TIMER%20A%20Blink/Timer%20A%20Blink.gif)
 
-## Task
-Using the TIMER module instead of a software loop, control the speed of two LEDS blinking on your development boards. Experiment with the different counting modes available as well as the effect of the pre-dividers. Why would you ever want to use a pre-divider? What about the Capture and Compare registers? Your code should include a function (if you want, place it in its own .c and .h files) which can convert a desired Hz into the proper values required to operate the TIMER modules.
+## How Does The Code Work
+Using the MSP430 library I created, it was easy to implement all five required processors into one main.c file. The main method disables the watchdog timer, initializes the processors setup, LEDs and Timer A (This is all done through the Library). Timer A is initialized by providing it a clock source, clock divider, clock mode and capture/compare value. I used the 1 MHz SMCLK, divider 8, continuous mode and the led1 period to initialize the clock. The timer is run at 125 kHz (1 MHz divided by 8). I set it to continuous mode so it can use multiple capture/compare values for the different periods. The second capture/compare value was set to the led2 period and both capture/compare interrupts were enabled. Once the interrupts fired, the CCR0 interrupt would toggle LED1 and increment its register by the period. The CCR1 interrupt toggled LED 2 and incremented itself as well. Using two capture/compare registers allows the LEDs to blink at their own independent rates. 
 
-### Extra Work
-#### Thinking with HALs
-So maybe up to this point you have noticed that your software is looking pretty damn similar to each other for each one of these boards. What if there was a way to abstract away all of the particulars for a processor and use the same functional C code for each board? Just for this simple problem, why don't you try and build a "config.h" file which using IFDEF statements can check to see what processor is on board and initialize particular registers based on that.
 
-#### Low Power Timers
-Since you should have already done a little with interrupts, why not build this system up using interrupts and when the processor is basically doing nothing other than burning clock cycles, drop it into a Low Power mode. Do a little research and figure out what some of these low power modes actually do to the processor, then try and use them in your code. If you really want to put your code to the test, using the MSP430FR5994 and the built in super cap, try and get your code to run for the longest amount of time only using that capacitor as your power source.
+## Important Things to Note
+* A switch case statement MUST be used with TA0IV whenever using an interrupt vector that isn't from CCR0.
+* Interrupt vector naming follows the following examples:
+CCR0 -> #pragma vector=TIMER0_A0_VECTOR
+CCR1 -> #pragma vector=TIMER0_A1_VECTOR

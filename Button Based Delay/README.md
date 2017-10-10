@@ -1,12 +1,12 @@
 # Button Based Delay
-Now that you have begun to familiarize yourself with the TIMER modules, why don't we make an interesting change to our code from the last lab.
+Now that we have a little introduction to embedded systems, it is time to dive deeper into how efficient a processor can run. Timers and interrupts are two fundamental parts of all decent processors. This excercise aims to combine our knew knowledge on GPIO interrupts and timer interrupts by creating a program which sets an LED to toggle at the rate a button is pressed.
 
-## Task
-Setup your microcontroller to initially blink and LED at a rate of 10Hz upon restarting or powering up. Then utilizing one of the buttons on board, a user should be able to set the delay or blinking rate of the LED by holding down a button. The duration in which the button is depressed should then become the new rate at which the LED blinks. As previously stated, you most likely will want to take advantage of the fact that TIMER modules exist and see if you can let them do a bulk of the work for you.
+![alt text](https://github.com/RU09342/lab-3-interrupts-and-timers-tcsmith20/blob/master/Button%20Based%20Delay/Button%20Based%20Delay.gif)
 
-### Extra Work
-## Reset Button
-What is a piece of electronics without a reset button? Instead of relying on resetting your processor using the built in reset circuitry, why not instead use another button to reset the rate back to 10Hz.
+## How Does The Code Work
+Using the MSP430 library I created, it was easy to implement all five required processors into one main.c file. The main method disables the watchdog timer, initializes the processors setup, LEDs, button 1 and Timer A (This is all done through the Library). Button 1's interrupt is enabled to be triggered on the negative edge while Timer A is initialized with ACLK (32 kHz), up mode, divider 8 and 10 Hz. A slower clock was used to provide more realistic button pressing times. If SMCLK was used, the user would have to press the button within a half second for the clock to not overflow. Using SMCLK allows the user to hold the button up to 16 seconds and not overflow. The Timer A Interrupt is then enabled. When the Timer A interupt fires, the LED will toggle. In order to set the proper period for Timer A, within the button interrupt, a different timer (Timer B) is started when the button is pressed and read when the button is depressed. This value is then assigned to Timer A so the LED blinks in the correct interval.  
 
-## Button Based Hertz
-Most likely using two buttons, what if instead of making a delay loop based on the time, the user could instead enter a mode where the number of times they pressed the button would become the number in Hz of the blinking rate? How do you think you would implement that with just one button?
+
+## Important Things to Note
+* Within the button interrupt, I switch the edge the interrupt fires on. This is so the interrupt fires on both edges of the button. I used if statements to determine what tasks to complete based on what edge is selected.
+* Multiple Timers are used in this excercise. It can be done with one, but it is more accurate and easier to do with two. One timer is designated to blinking the LED and the other register is used to determine how long the button is pressed.
