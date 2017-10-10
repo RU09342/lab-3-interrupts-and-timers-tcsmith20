@@ -43,21 +43,28 @@ TimerA_SetCompareVal1(4300);
 Enables the interrupt for Timer A CCR0.
 #### TimerA Enable Interrupt CCR0
 ```c
-TimerA_EnableInterrupt0()
+TimerA_EnableInterrupt0();
 ```
 
 ### void TimerA_EnableInterrupt1()
 Enables the interrupt for Timer A CCR1.
 #### TimerA Enable Interrupt CCR1
 ```c
-TimerA_EnableInterrupt1()
+TimerA_EnableInterrupt1();
+```
+
+### void TimerA_GetInterruptVector()
+Returns the Timer A interrupt vector.
+#### Get Interrupt Vector
+```c
+int interrupt_vector_TA0IV = TimerA_GetInterruptVector();
 ```
 
 ### void TimerA_ResetTime()
 Resets the time for Timer A counter.
 #### void TimerA Reset Time
 ```c
-TimerA_ResetTime()
+TimerA_ResetTime();
 ```
 
 ### int TimerA_TimeNow()
@@ -119,6 +126,13 @@ Enables the interrupt for Timer B CCR1.
 #### TimerB Enable Interrupt CCR1
 ```c
 TimerB_EnableInterrupt1()
+```
+
+### void TimerB_GetInterrupt Vector()
+Returns the Timer B interrupt vector.
+#### Get Interrupt Vector
+```c
+int interrupt_vector_TB0IV = TimerB_GetInterruptVector();
 ```
 
 ### void TimerB_ResetTime()

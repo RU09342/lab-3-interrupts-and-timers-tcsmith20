@@ -16,6 +16,7 @@ struct Timer {
     volatile unsigned int * ccr0_control_reg;
     volatile unsigned int * ccr1_reg;
     volatile unsigned int * ccr1_control_reg;
+    volatile unsigned int * interrupt_vector;
 
     int clk;
     int divider;
@@ -46,6 +47,7 @@ void TimerA_SetCompareVal0(unsigned int compare_val);
 void TimerA_SetCompareVal1(unsigned int compare_val);
 void TimerA_EnableInterrupt0();
 void TimerA_EnableInterrupt1();
+int  TimerA_GetInterruptVector();
 void TimerA_ResetTime();
 int  TimerA_TimeNow();
 int  TimerA_TimeSince(unsigned int time);
@@ -56,6 +58,7 @@ void TimerB_SetCompareVal0(unsigned int compare_val);
 void TimerB_SetCompareVal1(unsigned int compare_val);
 void TimerB_EnableInterrupt0();
 void TimerB_EnableInterrupt1();
+int  TimerB_GetInterruptVector();
 void TimerB_ResetTime();
 int  TimerB_TimeNow();
 int  TimerB_TimeSince(unsigned int time);

@@ -28,6 +28,7 @@ void TimerA_Init(int clock_sel, int clock_mode, int clock_div, unsigned int comp
     timerA.ccr0_control_reg = ccr0A_control_reg;
     timerA.ccr1_reg = ccr1A_reg;
     timerA.ccr1_control_reg = ccr1A_control_reg;
+    timerA.interrupt_vector = interrupt_vector_A;
     timerA.clk = Timer_SetClock(clock_sel);
     timerA.divider = Timer_SetDivider(clock_div);
     timerA.mode = Timer_SetMode(clock_mode);
@@ -60,6 +61,11 @@ void TimerA_EnableInterrupt0(){
 /** Enables Timer A interrupt for CCR1 */
 void TimerA_EnableInterrupt1(){
     *timerA.ccr1_control_reg = interrupt_enable;
+}
+
+/** Returns the Timer A interrupt vector */
+int TimerA_GetInterruptVector(){
+    return *timerA.interrupt_vector;
 }
 
 /** Resets the time on timer A */
@@ -109,6 +115,7 @@ void TimerB_Init(int clock_sel, int clock_mode, int clock_div, unsigned int comp
     timerB.ccr0_control_reg = ccr0B_control_reg;
     timerB.ccr1_reg = ccr1B_reg;
     timerB.ccr1_control_reg = ccr1B_control_reg;
+    timerB.interrupt_vector = interrupt_vector_B;
     timerB.clk = Timer_SetClock(clock_sel);
     timerB.divider = Timer_SetDivider(clock_div);
     timerB.mode = Timer_SetMode(clock_mode);
@@ -142,6 +149,11 @@ void TimerB_EnableInterrupt0(){
 /** Enables Timer B interrupt for CCR1 */
 void TimerB_EnableInterrupt1(){
     *timerB.ccr1_control_reg = interrupt_enable;                             // CCR0 interrupt enabled
+}
+
+/** Returns the Timer B interrupt vector */
+int TimerB_GetInterruptVector(){
+    return *timerB.interrupt_vector;
 }
 
 /** Resets the time on timer B */
